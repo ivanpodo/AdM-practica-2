@@ -5,11 +5,6 @@
 ### Carrera de Especialización en Sistemas Embebidos
 
 ---
-#### Alumnos
-- Ing. Marco Rolón Radcenco
-- Ing. Pablo Gimenez
-- Ing. Iván Podoroska
----
 
 ## Guía Práctica 2
 **Uso de instrucciones condicionales en Assembly**
@@ -46,7 +41,7 @@ downSample(vectorIn, vectorOut, 12, 3) // longitud = 12; N = 3
 ```
 El resultado esperado deberá ser:
 
-![imagen-vectores](docs/img-1.png)
+![imagen-vectores](img-1.png)
 
 ### Ejercicio 4
 Realizar una función que reciba un vector de muestras no signadas de 16 bits e invierta su orden. Utilizar el siguiente prototipo para la función:
