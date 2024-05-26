@@ -15,7 +15,7 @@
 // los “empaquete” en otro vector de 16 bits,
 // guardando la parte alta (MSB).
 //
-// void pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud)
+// void pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud
 //
 // r0: *vectorIn
 // r1: *vectorOut
@@ -71,7 +71,6 @@
 
 	max_loop:
 		sub r1, #1     				// Decrementar en 1 indice de vectorIn
-		cbz r1, max_end				// Si indice de vectorIn es 0, salir del loop
 
 		ldr r2, [r0, r1, LSL #2]  	// Cargar siguiente elemento de vectorIn
 		cmp r2, r3           		// Comparar valor actual con máximo actual
@@ -80,6 +79,7 @@
 		mov r3, r2           		// Actualizar el máximo actual
 		mov r4, r1           		// Actualizar el índice del máximo actual
 
+		cbz r1, max_end				// Si indice de vectorIn no es 0, repetir el loop
 		b max_loop
 
 	max_end:
@@ -117,12 +117,12 @@
 		cbz r3, downSample_end		// Checkear si N es cero
 
 		udiv r4, r2, r3      		// Muestras a descartar: Dividir longitud entre N, almacenar el cociente en r4
-		sub r4, r2, r4				// Longitud de vectorOut: Restar a longitud las muestras a descartar, almacenar el resultado en r4
+		sub r4, r3, r2				// Longitud de vectorOut: Restar a longitud las muestras a descartar, almacenar el resultado en r4
 
 	downSample_loop:
 		udiv r6, r2, r3       		// Cociente: r6 = r2 / r3
 		mls r6, r6, r3, r2    		// Resto: r6 = r2 - (r6 * r3).
-		cmp r6, #0            		// Si el resto es cero entonces es multiplo y hay que descartar muestra.
+		cmp r6, #0            		// Si es cero entonces es multiplo y hay que descartar muestra.
 		itt eq						// Si es cero ejecutar las proximas instrucciones, sino saltar a la siguiente
 		subeq r2, #1     			// Decrementar en 1 indice de vectorIn
 		beq downSample_loop         // Descartar muestra y repetir el loop
@@ -174,11 +174,10 @@
 		sub r1, #1     				// Decrementar en 1 indice de vector down
 		add r2, #1     				// Incrementar en 1 indice de vector up
 
-		cmp r1, r2					// Si r2>r1 llegue a la mitad de vector y todos los elementos estan invertidos
-		bgt invertir_loop			// Si r2<=r1 continuo en el loop
+		cbz r2, invertir_end		// Si indice de vector no es 0, repetir el loop
+		b invertir_loop
 
 	invertir_end:
 		pop {r4}					// Restaurar registros
 		bx lr               		// Volver de la función
 // ************************************************************************
-

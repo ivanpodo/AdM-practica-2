@@ -1,0 +1,22 @@
+/*
+ * asm_functions.h
+ *
+ */
+
+#ifndef INC_ASM_FUNCTIONS_H_
+#define INC_ASM_FUNCTIONS_H_
+
+
+void zeros (uint32_t *vectorIn, uint32_t longitud);
+
+void productoEscalar32(uint32_t *vectorIn, uint32_t *vectorOut, uint32_t longitud, uint16_t escalar);
+
+void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud, uint16_t escalar);
+
+void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud, uint16_t escalar);
+
+uint32_t bitfield_clear(uint32_t *dato, uint32_t ancho, uint32_t inicio);
+
+uint32_t bitfield_toggle(uint32_t *dato, uint32_t ancho, uint32_t inicio);
+
+#endif /* INC_ASM_FUNCTIONS_H_ */

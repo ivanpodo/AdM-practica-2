@@ -1,0 +1,102 @@
+/*
+ * asm_functions.S
+ */
+
+
+.text
+
+.syntax unified
+.thumb
+
+.global asm_function
+
+//void zeros (uint32_t *vectorIn, uint32_t longitud);
+asm_zeros:
+		// Guarda de seguridad
+		cbz r0, zeros_exit	// Salir si la dirección del vector es nula
+		mov r2, #0
+	zeros_loop:
+		// Se recorre el vector del último al primer elemento
+		sub r1, #1	// Restar 1 antes de recorrer el vector
+		// El shift se hace por dos, por lo que se incrementa de a 4 bytes
+		str r2, [r0, r1, LSL #2]
+		cbz r1, zeros_exit
+		b zeros_loop
+	zeros_exit:
+       	bx lr
+
+
+//void productoEscalar32(uint32_t *vectorIn, uint32_t *vectorOut, uint32_t longitud, uint16_t escalar);
+.thumb_func
+asm_productoEscalar32:
+		// Guarda de seguridad
+		cbz r0, pe32_exit	// Salir si la dirección del vector es nula
+		cbz r1, pe32_exit	// Salir si la dirección del vector es nula
+
+		// push r4
+		mov r4, #0
+
+	pe32_loop:
+		// Se recorre el vector del último al primer elemento
+		sub r2, #1	// Restar 1 antes de recorrer el vector
+
+		mul r4, r3
+		// El shift se hace por dos, por lo que se incrementa de a 4 bytes
+		str r4, [r0, r1, LSL #2]
+		cbz r2, pe32_exit
+		b pe32_loop
+
+	pe32_exit:
+		// pop r4
+       	bx lr
+
+
+//void productoEscalar16(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud, uint16_t escalar);
+.thumb_func
+	asm_productoEscalar16:
+
+		usat r4, #16, r2
+		bx lr
+
+
+//void productoEscalar12(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud, uint16_t escalar);
+.thumb_func
+	asm_productoEscalar12:
+
+		usat r4, #12, r2
+		bx lr
+
+
+//uint32_t bitfield_clear(uint32_t *dato, uint32_t ancho, uint32_t inicio);
+.thumb_func
+asm_bitfield_clear:
+		// Guarda de seguridad
+		cbz r0, bitfield_clear_exit	// Salir si el dato es cero
+		cbz r1, bitfield_clear_exit	// Salir si el ancho del campo es cero
+
+		mov r3, #1	// Se coloca un 1 en el lsb de r3
+		lsl r3, r1	// Se desplaza el 1 según el ancho del campo
+		sub r3, #1	// Se genera la máscara. Ej: 001000 - 1 = 000111
+		lsl r3, r2	// Se desplaza la máscara según inicio. Ej: 011100
+		mvn r3, r3	// Se niega la máscara. Ej: 100011
+		and r0, r3	// Se aplica and bit a bit. Se devuelve el resultado en r0
+
+	bitfield_clear_exit:
+		bx lr
+
+
+//uint32_t bitfield_toggle(uint32_t *dato, uint32_t ancho, uint32_t inicio);
+.thumb_func
+asm_bitfield_toggle:
+		// Guarda de seguridad
+		cbz r0, bitfield_toggle_exit	// Salir si el dato es cero
+		cbz r1, bitfield_toggle_exit	// Salir si el ancho del campo es cero
+
+		mov r3, #1	// Se coloca un 1 en el lsb de r3
+		lsl r3, r1	// Se desplaza el 1 según el ancho del campo
+		sub r3, #1	// Se genera la máscara. Ej: 001000 - 1 = 000111
+		lsl r3, r2	// Se desplaza la máscara según inicio. Ej: 011100
+		eor r0, r0, r3	// Se aplica xor bit a bit. Se devuelve el resultado en r0
+
+	bitfield_toggle_exit:
+		bx lr

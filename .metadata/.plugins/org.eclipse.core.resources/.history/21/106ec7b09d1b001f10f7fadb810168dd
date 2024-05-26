@@ -117,12 +117,12 @@
 		cbz r3, downSample_end		// Checkear si N es cero
 
 		udiv r4, r2, r3      		// Muestras a descartar: Dividir longitud entre N, almacenar el cociente en r4
-		sub r4, r2, r4				// Longitud de vectorOut: Restar a longitud las muestras a descartar, almacenar el resultado en r4
+		sub r4, r3, r2				// Longitud de vectorOut: Restar a longitud las muestras a descartar, almacenar el resultado en r4
 
 	downSample_loop:
 		udiv r6, r2, r3       		// Cociente: r6 = r2 / r3
 		mls r6, r6, r3, r2    		// Resto: r6 = r2 - (r6 * r3).
-		cmp r6, #0            		// Si el resto es cero entonces es multiplo y hay que descartar muestra.
+		cmp r6, #0            		// Si es cero entonces es multiplo y hay que descartar muestra.
 		itt eq						// Si es cero ejecutar las proximas instrucciones, sino saltar a la siguiente
 		subeq r2, #1     			// Decrementar en 1 indice de vectorIn
 		beq downSample_loop         // Descartar muestra y repetir el loop
@@ -181,4 +181,3 @@
 		pop {r4}					// Restaurar registros
 		bx lr               		// Volver de la función
 // ************************************************************************
-

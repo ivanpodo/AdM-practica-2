@@ -1,0 +1,98 @@
+17:16:44 **** Incremental Build of configuration Debug for project AdM_guia2 ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "AdM_guia2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Sandbox\Documents\AdM_guia2\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AdM_guia2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: AdM_guia2.elf
+ 
+arm-none-eabi-size  AdM_guia2.elf 
+arm-none-eabi-objdump -h -S AdM_guia2.elf  > "AdM_guia2.list"
+   text	   data	    bss	    dec	    hex	filename
+   5352	     20	   1572	   6944	   1b20	AdM_guia2.elf
+Finished building: default.size.stdout
+ 
+Finished building: AdM_guia2.list
+ 
+17:19:11 **** Incremental Build of configuration Debug for project AdM_guia2 ****
+make -j4 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_functions.d" -MT"Core/Src/asm_functions.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_functions.o" "../Core/Src/asm_functions.S"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "AdM_guia2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Sandbox\Documents\AdM_guia2\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AdM_guia2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: AdM_guia2.elf
+ 
+arm-none-eabi-size  AdM_guia2.elf 
+arm-none-eabi-objdump -h -S AdM_guia2.elf  > "AdM_guia2.list"
+   text	   data	    bss	    dec	    hex	filename
+   5352	     20	   1572	   6944	   1b20	AdM_guia2.elf
+Finished building: default.size.stdout
+ 
+Finished building: AdM_guia2.list
+ 
+17:22:36 **** Incremental Build of configuration Debug for project AdM_guia2 ****
+make -j4 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_functions.d" -MT"Core/Src/asm_functions.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_functions.o" "../Core/Src/asm_functions.S"
+arm-none-eabi-gcc -o "AdM_guia2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Sandbox\Documents\AdM_guia2\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AdM_guia2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: AdM_guia2.elf
+ 
+arm-none-eabi-size  AdM_guia2.elf 
+arm-none-eabi-objdump -h -S AdM_guia2.elf  > "AdM_guia2.list"
+   text	   data	    bss	    dec	    hex	filename
+   5352	     20	   1572	   6944	   1b20	AdM_guia2.elf
+Finished building: default.size.stdout
+ 
+Finished building: AdM_guia2.list
+ 
+17:25:07 **** Incremental Build of configuration Debug for project AdM_guia2 ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:121:12: warning: unused variable 'vectorOut3' [-Wunused-variable]
+  121 |    int32_t vectorOut3[15];
+      |            ^~~~~~~~~~
+../Core/Src/main.c:120:13: warning: unused variable 'N3' [-Wunused-variable]
+  120 |    uint32_t N3 = 4;
+      |             ^~
+../Core/Src/main.c:119:13: warning: unused variable 'longitud3' [-Wunused-variable]
+  119 |    uint32_t longitud3 = 20;
+      |             ^~~~~~~~~
+../Core/Src/main.c:118:12: warning: unused variable 'vectorIn3' [-Wunused-variable]
+  118 |    int32_t vectorIn3[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+      |            ^~~~~~~~~
+arm-none-eabi-gcc -o "AdM_guia2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Sandbox\Documents\AdM_guia2\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AdM_guia2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: AdM_guia2.elf
+ 
+arm-none-eabi-size  AdM_guia2.elf 
+arm-none-eabi-objdump -h -S AdM_guia2.elf  > "AdM_guia2.list"
+   text	   data	    bss	    dec	    hex	filename
+   5504	     20	   1572	   7096	   1bb8	AdM_guia2.elf
+Finished building: default.size.stdout
+ 
+Finished building: AdM_guia2.list
+ 
+17:25:53 **** Incremental Build of configuration Debug for project AdM_guia2 ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "AdM_guia2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Sandbox\Documents\AdM_guia2\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AdM_guia2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: AdM_guia2.elf
+ 
+arm-none-eabi-size  AdM_guia2.elf 
+arm-none-eabi-objdump -h -S AdM_guia2.elf  > "AdM_guia2.list"
+   text	   data	    bss	    dec	    hex	filename
+   5524	     20	   1572	   7116	   1bcc	AdM_guia2.elf
+Finished building: default.size.stdout
+ 
+Finished building: AdM_guia2.list
+ 
+17:27:47 **** Incremental Build of configuration Debug for project AdM_guia2 ****
+make -j4 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_functions.d" -MT"Core/Src/asm_functions.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_functions.o" "../Core/Src/asm_functions.S"
+arm-none-eabi-gcc -o "AdM_guia2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Sandbox\Documents\AdM_guia2\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AdM_guia2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: AdM_guia2.elf
+ 
+arm-none-eabi-size  AdM_guia2.elf 
+arm-none-eabi-objdump -h -S AdM_guia2.elf  > "AdM_guia2.list"
+   text	   data	    bss	    dec	    hex	filename
+   5524	     20	   1572	   7116	   1bcc	AdM_guia2.elf
+Finished building: default.size.stdout
+ 
+Finished building: AdM_guia2.list
+ 

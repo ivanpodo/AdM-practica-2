@@ -1,0 +1,17 @@
+17:27:47 **** Incremental Build of configuration Debug for project AdM_guia2 ****
+make -j4 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Src/asm_functions.d" -MT"Core/Src/asm_functions.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/asm_functions.o" "../Core/Src/asm_functions.S"
+arm-none-eabi-gcc -o "AdM_guia2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Sandbox\Documents\AdM_guia2\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="AdM_guia2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: AdM_guia2.elf
+ 
+arm-none-eabi-size  AdM_guia2.elf 
+arm-none-eabi-objdump -h -S AdM_guia2.elf  > "AdM_guia2.list"
+   text	   data	    bss	    dec	    hex	filename
+   5524	     20	   1572	   7116	   1bcc	AdM_guia2.elf
+Finished building: default.size.stdout
+ 
+Finished building: AdM_guia2.list
+ 
+
+17:27:48 Build Finished. 0 errors, 0 warnings. (took 1s.91ms)
+

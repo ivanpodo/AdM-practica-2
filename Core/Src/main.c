@@ -85,6 +85,53 @@ int main(void)
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
 
+  // test ejercicio 1
+  int32_t vectorIn1[] = {0xAAAA5555, 0x12345678, 0x87654321, 0xABCDEF12, 0x8888FFFF};
+  uint32_t longitud1 = 5;
+  int16_t vectorOut1[5];
+
+  pack32to16(vectorIn1, vectorOut1, longitud1);
+
+  // test ejercicio 2
+  int32_t vectorIn2a[] = {1, 3, 7, 2, 5};
+  uint32_t longitud2a = 5;
+
+  uint32_t maxPos2a = max(vectorIn2a, longitud2a);
+
+  int32_t vectorIn2b[] = {1, 3, 7, 2, 5, 12, 34, 1000, 12, -45, 66, 0};
+  uint32_t longitud2b = 12;
+
+  uint32_t maxPos2b = max(vectorIn2b, longitud2b);
+
+  maxPos2a = maxPos2b;
+  maxPos2b = maxPos2a;
+
+  // test ejercicio 3
+  int32_t vectorIn3a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  uint32_t longitud3a = 12;
+  uint32_t N3a = 3;
+  int32_t vectorOut3a[8];
+
+  downSample(vectorIn3a, vectorOut3a, longitud3a, N3a);
+
+  int32_t vectorIn3b[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+  uint32_t longitud3b = 20;
+  uint32_t N3b = 4;
+  int32_t vectorOut3b[15];
+
+  downSample(vectorIn3b, vectorOut3b, longitud3b, N3b);
+
+  // test ejercicio 4
+  uint16_t vector4a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  uint32_t longitud4a = 10;
+
+  invertir(vector4a, longitud4a);
+
+  uint16_t vector4b[] = {1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009};
+  uint32_t longitud4b = 9;
+
+  invertir(vector4b, longitud4b);  
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
