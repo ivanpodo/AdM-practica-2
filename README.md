@@ -12,6 +12,7 @@ Este repositorio contiene las soluciones a los ejercicios planteados en la [Guí
   - `asm_func.S`: Archivo que contiene las definiciones de las funciones en Assembly.
 - `docs/`: Documentación adicional y referencias.
   - `guia-practica-2.md`: Guía práctica en formato Markdown.
+- `deliverables/`: Entregables.
 
 ## Requisitos
 - `STM32CubeIDE`: Entorno de desarrollo integrado para STM32.

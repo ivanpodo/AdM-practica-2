@@ -1,0 +1,184 @@
+.text
+
+.syntax unified
+.thumb
+
+.global pack32to16
+.global max
+.global downSample
+.global invertir
+
+// **************************************************************************
+// Ejercicio 1
+//
+// Realizar una función que reciba un vector de números signados de 32 bits y
+// los “empaquete” en otro vector de 16 bits,
+// guardando la parte alta (MSB).
+//
+// void pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud)
+//
+// r0: *vectorIn
+// r1: *vectorOut
+// r2: longitud / indice de vectorIn
+// r3: variable auxiliar para la conversion
+// **************************************************************************
+
+.thumb_func
+	pack32to16:
+		cbz r0, pack32to16_end		// Checkear si *vectorIn es NULL
+		cbz r1, pack32to16_end		// Checkear si *vectorOut es NULL
+		cbz r2, pack32to16_end		// Checkear si longitud es cero
+
+	pack32to16_loop:
+		sub r2, #1     				// Decrementar en 1 indice de vectorIn
+
+		ldr r3, [r0, r2, LSL #2]	// Cargar siguiente elemento de vectorIn
+		asr r3, r3, #16     		// Desplazamiento aritmetico (con signo) del valor de r3 16 bits a la derecha
+		strh r3, [r1, r2, LSL #1]  	// Almacenar el valor en vectorOut como un elemento de 16 bits y posincrementar r1
+
+		cbz r2, pack32to16_end		// Si indice de vectorIn no es 0, repetir el loop
+		b pack32to16_loop
+
+	pack32to16_end:
+		bx lr               		// Volver de la función
+// ************************************************************************
+
+// ************************************************************************
+// Ejercicio 2
+//
+// Realizar una función que reciba un vector de números signados de 32 bits
+// y devuelva la posición del máximo del vector.
+//
+// uint32_t max (int32_t * vectorIn, uint32_t longitud)
+//
+// r0: *vectorIn
+// r1: longitud / indice de vectorIn
+// r2: valor actual
+// r3: valor maximo
+// r4: indice del valor maximo (retorno funcion)
+// ************************************************************************
+
+.thumb_func
+	max:
+		push {r4}					// Guardar registros
+
+		mov r4, #0          		// Valor de retorno inicial 0
+
+		cbz r0, max_end				// Checkear si *vectorIn es NULL
+		cbz r1, max_end				// Checkear si longitud es cero
+
+		mov r3, #0          		// Setear 0 al valor maximo
+
+	max_loop:
+		sub r1, #1     				// Decrementar en 1 indice de vectorIn
+		cbz r1, max_end				// Si indice de vectorIn es 0, salir del loop
+
+		ldr r2, [r0, r1, LSL #2]  	// Cargar siguiente elemento de vectorIn
+		cmp r2, r3           		// Comparar valor actual con máximo actual
+		ble max_loop             	// Si valor actual <= máximo actual, repetir el loop
+
+		mov r3, r2           		// Actualizar el máximo actual
+		mov r4, r1           		// Actualizar el índice del máximo actual
+
+		b max_loop
+
+	max_end:
+		mov r0, r4					// Cargar valor de retorno
+
+		pop {r4}					// Restaurar registros
+		bx lr               		// Volver de la función
+// ************************************************************************
+
+// ************************************************************************
+// Ejercicio 3
+//
+// Realizar una función que reciba un vector de muestras signadas de 32 bits
+// y descarte una de cada N muestras.
+//
+// void downSample (int32_t * vectorIn, int32_t * vectorOut,
+//					uint32_t longitud, uint32_t N)
+//
+// r0: *vectorIn
+// r1: *vectorOut
+// r2: longitud / indice de vectorIn
+// r3: N
+// r4: indice de vectorOut
+// r5: valor actual
+// r6: variable auxiliar para determinar si el indice de vectorIn es multiplo de N
+// ************************************************************************
+
+.thumb_func
+	downSample:
+		push {r4-r6}				// Guardar registros
+
+		cbz r0, downSample_end		// Checkear si *vectorIn es NULL
+		cbz r1, downSample_end		// Checkear si *vectorOut es NULL
+		cbz r2, downSample_end		// Checkear si longitud es cero
+		cbz r3, downSample_end		// Checkear si N es cero
+
+		udiv r4, r2, r3      		// Muestras a descartar: Dividir longitud entre N, almacenar el cociente en r4
+		sub r4, r2, r4				// Longitud de vectorOut: Restar a longitud las muestras a descartar, almacenar el resultado en r4
+
+	downSample_loop:
+		udiv r6, r2, r3       		// Cociente: r6 = r2 / r3
+		mls r6, r6, r3, r2    		// Resto: r6 = r2 - (r6 * r3).
+		cmp r6, #0            		// Si el resto es cero entonces es multiplo y hay que descartar muestra.
+		itt eq						// Si es cero ejecutar las proximas instrucciones, sino saltar a la siguiente
+		subeq r2, #1     			// Decrementar en 1 indice de vectorIn
+		beq downSample_loop         // Descartar muestra y repetir el loop
+
+		sub r2, #1     				// Decrementar en 1 indice de vectorIn
+		ldr r5, [r0, r2, LSL #2]  	// Cargar siguiente elemento de vectorIn
+		sub r4, #1  				// Decrementar en 1 indice de vectorOut
+		str r5, [r1, r4, LSL #2]  	// Cargar siguiente elemento en vectorOut
+
+		cbz r2, downSample_end		// Si indice de vectorIn no es 0, repetir el loop
+		b downSample_loop
+
+	downSample_end:
+		pop {r4-r6}					// Restaurar registros
+		bx lr               		// Volver de la función
+// ************************************************************************
+
+// ************************************************************************
+// Ejercicio 4
+//
+// Realizar una función que reciba un vector de muestras no signadas de 16 bits
+// e invierta su orden.
+//
+//void invertir (uint16_t * vector, uint32_t longitud)
+//
+// r0: *vector
+// r1: longitud / indice de vector down
+// r2: indice de vector up
+// r3: valor de vector down a invertir
+// r4: valor de vector up a invertir
+// ************************************************************************
+
+.thumb_func
+	invertir:
+		push {r4}					// Guardar registros
+
+		cbz r0, invertir_end		// Checkear si *vector es NULL
+		cbz r1, invertir_end		// Checkear si longitud es cero
+
+		sub r1, #1     				// Decrementar en 1 indice de vector down
+		mov r2, #0          		// Setear 0 al indice de vector up
+
+	invertir_loop:
+		ldrh r3, [r0, r1, LSL #1]   // Cargar vector[r1] en r3
+		ldrh r4, [r0, r2, LSL #1]   // Cargar vector[r2] en r4
+		strh r4, [r0, r1, LSL #1]   // Guardar r4 en vector[r1]
+		strh r3, [r0, r2, LSL #1]   // Guardar r3 en vector[r2]
+
+		sub r1, #1     				// Decrementar en 1 indice de vector down
+		add r2, #1     				// Incrementar en 1 indice de vector up
+
+		cmp r1, r2					// Si r2>r1 llegue a la mitad de vector y todos los elementos estan invertidos
+		bgt invertir_loop			// Si r2<=r1 continuo en el loop
+
+	invertir_end:
+		pop {r4}					// Restaurar registros
+		bx lr               		// Volver de la función
+// ************************************************************************
+
