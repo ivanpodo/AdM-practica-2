@@ -48,6 +48,10 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
+void 	 pack32to16 (int32_t * vectorIn, int16_t * vectorOut, uint32_t longitud);
+uint32_t max (int32_t * vectorIn, uint32_t longitud);
+void 	 downSample (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N);
+void 	 invertir (uint16_t * vector, uint32_t longitud);
 
 /* USER CODE END PFP */
 
@@ -63,6 +67,21 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
+	uint32_t ciclos_C, ciclos_ASM;
+	int32_t vectorIn[] = {0xffff0000, 0xaaaa0000, 0xbbbb0000};
+	int16_t vectorOut[3];
+
+	DWT->CYCCNT = 0;
+	pack32to16(vectorIn, vectorOut, 3);
+	ciclos_C = DWT->CYCCNT; // 0xa7
+
+	DWT->CYCCNT = 0;
+	asm_pack32to16(vectorIn, vectorOut, 3);
+	ciclos_ASM = DWT->CYCCNT; // 0x2a (~4 times more efective)
+
+	(void)ciclos_C;		//to clean warning
+	(void)ciclos_ASM;	//to clean warning
 
   /* USER CODE END 1 */
 
@@ -140,7 +159,75 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void pack32to16(int32_t * vectorIn, int16_t * vectorOut, uint32_t longitud)
+{
+	if(NULL == vectorIn || NULL == vectorOut)
+	{
+		return;
+	}
 
+	for(uint32_t i = longitud; i > 0U; i--)
+	{
+		vectorOut[i-1] = (uint16_t)(vectorIn[i-1] >> 16);
+	}
+}
+
+uint32_t max(int32_t * vectorIn, uint32_t longitud)
+{
+	if(NULL == vectorIn)
+	{
+		return 0;
+	}
+
+	uint32_t max_pos = 0;
+	int32_t max_val = vectorIn[0];
+
+	for(uint32_t i = longitud; i > 0U; i--)
+	{
+		if(vectorIn[i-1] > max_val)
+		{
+			max_val = vectorIn[i-1];
+			max_pos = (i-1);
+		}
+	}
+
+	return max_pos;
+}
+
+void downSample(int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud, uint32_t N)
+{
+	if(NULL == vectorIn || NULL == vectorOut || 0U == N)
+	{
+		return;
+	}
+
+	uint32_t itOut	= longitud - (longitud / N);
+
+	for(uint32_t itIn = longitud; itIn > 0 ; itIn--)
+	{
+		if( 0U != (itIn % N))
+		{
+			vectorOut[itOut - 1] = vectorIn[itIn - 1];
+			itOut--;
+		}
+	}
+}
+
+void invertir(uint16_t * vector, uint32_t longitud)
+{
+	uint16_t temp1 = 0;
+	uint16_t temp2 = 0;
+
+	// con esta condición, en el valor central de los impares hace el swap con sigo mismo
+	for(uint32_t i = longitud; i > (longitud / 2); i--)
+	{
+		temp1 = vector[longitud - i];
+		temp2 = vector[i - 1];
+
+		vector[longitud - i] = temp2;
+		vector[i - 1] 		 = temp1;
+	}
+}
 /* USER CODE END 4 */
 
 /**
